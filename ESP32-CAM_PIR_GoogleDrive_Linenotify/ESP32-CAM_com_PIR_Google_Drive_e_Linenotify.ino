@@ -5,8 +5,6 @@ Google Apps Script
 https://github.com/arielsam567/ESP32-CAM_com_PIR_GMAIL_e_LineNotify/blob/master/envia_imagem_capturada_para_google_drive_e_lineotify.gs
 Você deve permitir que qualquer pessoa e anônimo execute o script do google.
 
-How to add a new script
-https://www.youtube.com/watch?v=f46VBqWwUuI
 
 https://script.google.com/home
 https://script.google.com/home/executions
