@@ -1,13 +1,9 @@
 /*
-ESP32-CAM PIR Motion Sensor (Save a captured image to Google Drive and LineNotify)
-Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-7-21 13:00
-https://www.facebook.com/francefu
-
 PIR Motion Sensor -> GND, gpio13, 3.3V
 
 Google Apps Script
-https://github.com/fustyles/webduino/blob/gs/SendCapturedImageToGoogleDriveAndLinenotify_doPost.gs
-You must allow anyone and anonymous to execute the google script.
+https://github.com/arielsam567/ESP32-CAM_com_PIR_GMAIL_e_LineNotify/blob/master/envia_imagem_capturada_para_google_drive_e_lineotify.gs
+Você deve permitir que qualquer pessoa e anônimo execute o script do google.
 
 How to add a new script
 https://www.youtube.com/watch?v=f46VBqWwUuI
@@ -17,14 +13,14 @@ https://script.google.com/home/executions
 https://drive.google.com/drive/my-drive
 */
 
-// Enter your WiFi ssid and password
-const char* ssid     = "xxxxx";   //your network SSID
-const char* password = "xxxxx";   //your network password
+// Digite seu SSID e senha WiFi
+const char* ssid     = "xxxxx";   //Nome da sua rede wifi
+const char* password = "xxxxx";   //Senha da sua rede wifi
 int gpioPIR = 13;   //PIR Motion Sensor
 
 const char* myDomain = "script.google.com";
-String myScript = "/macros/s/xxxxxxxxxxxxxxxxxxxxxxxxx/exec";    //Create your Google Apps Script and replace the "myScript" path.
-String myLineNotifyToken = "myToken=xxxxxxxxxx";    //Line Notify Token. You can set the value of xxxxxxxxxx empty if you don't want to send picture to Linenotify.
+String myScript = "/macros/s/xxxxxxxxxxxxxxxxxxxxxxxxx/exec";    // Crie seu script do Google Apps e substitua o caminho "myScript".
+String myLineNotifyToken = "myToken=xxxxxxxxxx";    // Linha Notificar Token. Você pode definir o valor de xxxxxxxxxx vazio se não desejar enviar uma foto para o Linenotify.
 String myFoldername = "&myFoldername=ESP32-CAM";
 String myFilename = "&myFilename=ESP32-CAM.jpg";
 String myImage = "&myFile=";
@@ -37,8 +33,8 @@ String myImage = "&myFile=";
 
 #include "esp_camera.h"
 
-// WARNING!!! Make sure that you have either selected ESP32 Wrover Module,
-//            or another board which has PSRAM enabled
+// ATENÇÃO!!! Verifique se você selecionou o ESP32 Wrover Module,
+// ou outra placa com a PSRAM ativada
 
 //CAMERA_MODEL_AI_THINKER
 #define PWDN_GPIO_NUM     32
@@ -58,8 +54,7 @@ String myImage = "&myFile=";
 #define HREF_GPIO_NUM     23
 #define PCLK_GPIO_NUM     22
 
-void setup()
-{
+void setup(){
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
   
   Serial.begin(115200);
@@ -132,7 +127,6 @@ void setup()
   config.pin_reset = RESET_GPIO_NUM;
   config.xclk_freq_hz = 20000000;
   config.pixel_format = PIXFORMAT_JPEG;
-  //init with high specs to pre-allocate larger buffers
   if(psramFound()){
     config.frame_size = FRAMESIZE_UXGA;
     config.jpeg_quality = 10;  //0-63 lower number means higher quality
@@ -143,21 +137,18 @@ void setup()
     config.fb_count = 1;
   }
   
-  // camera init
   esp_err_t err = esp_camera_init(&config);
   if (err != ESP_OK) {
     Serial.printf("Camera init failed with error 0x%x", err);
     delay(1000);
     ESP.restart();
   }
-
-  //drop down frame size for higher initial frame rate
+  
   sensor_t * s = esp_camera_sensor_get();
   s->set_framesize(s, FRAMESIZE_VGA);  // UXGA|SXGA|XGA|SVGA|VGA|CIF|QVGA|HQVGA|QQVGA
 }
 
-void loop()
-{
+void loop(){
   pinMode(gpioPIR, INPUT_PULLUP);
   int v = digitalRead(gpioPIR);
   Serial.println(v);
@@ -241,9 +232,7 @@ void saveCapturedImage() {
   client.stop();
 }
 
-//From: https://github.com/zenmanenergy/ESP8266-Arduino-Examples/
-String urlencode(String str)
-{
+String urlencode(String str){
     String encodedString="";
     char c;
     char code0;
