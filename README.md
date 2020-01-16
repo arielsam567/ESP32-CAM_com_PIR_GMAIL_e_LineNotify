@@ -7,6 +7,7 @@ O sensor pir esta conectado a porta 13
 Você deve adicionar ao Google App Scrip o script envia_imagem_capturada_para_google_drive_e_lineotify.gs 
 
 Link do Google App Scrip:  https://script.google.com/home/
+
 Link do LineNotify: https://notify-bot.line.me/my/
 
 Link do script que deverá ser adicionado: https://github.com/arielsam567/ESP32-CAM_com_PIR_GMAIL_e_LineNotify/blob/master/envia_imagem_capturada_para_google_drive_e_lineotify.gs
